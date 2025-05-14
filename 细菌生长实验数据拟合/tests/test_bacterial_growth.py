@@ -4,11 +4,11 @@ import os
 import sys
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-#from solution.bacterial_growth_fitting_solution import (
 from bacterial_growth_fitting_student import (
     V_model,
     W_model,
-    fit_model
+    fit_V_model,
+    fit_W_model
 )
 
 class TestBacterialGrowthFitting(unittest.TestCase):
@@ -36,12 +36,12 @@ class TestBacterialGrowthFitting(unittest.TestCase):
 
     def test_fit_V_model(self):
         """测试V(t)模型拟合"""
-        popt_V, _ = fit_model(self.t_test, self.V_data, V_model, p0=[1.0])
+        popt_V, perr_V = fit_V_model(self.t_test, self.V_data)
         self.assertTrue(0.5 < popt_V[0] < 5.0)  # tau应该在合理范围内
 
     def test_fit_W_model(self):
         """测试W(t)模型拟合"""
-        popt_W, _ = fit_model(self.t_test, self.W_data, W_model, p0=[1.0, 1.0])
+        popt_W, perr_W = fit_W_model(self.t_test, self.W_data)
         self.assertTrue(0.5 < popt_W[0] < 2.0)  # A应该在合理范围内
         self.assertTrue(0.5 < popt_W[1] < 5.0)  # tau应该在合理范围内
 
